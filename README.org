@@ -1,0 +1,54 @@
+
+* hideshow-extra
+
+Additional =hideshow= commands and minor mode.
+
+** Installation
+
+Emacs >= 25.1 is required.
+
+*** Manual
+
+1. Download the source code and put it wherever you like, e.g. into =~/.emacs.d/hideshow-extra/=
+
+#+begin_src shell :eval no
+git clone https://github.com/KarimAziev/hideshow-extra.git ~/.emacs.d/hideshow-extra/
+#+end_src
+
+2. Add the downloaded directory to the load path:
+
+#+begin_src elisp :eval no
+(add-to-list 'load-path "~/.emacs.d/hideshow-extra/")
+(require 'hideshow-extra)
+#+end_src
+
+#+begin_src elisp :eval no
+(use-package hideshow-extra
+  :straight (hideshow-extra
+             :repo "KarimAziev/hideshow-extra"
+             :type git
+             :host github)
+  :bind ((:map hideshow-extra-mode-map
+               ("TAB" . hideshow-extra-toggle-or-indent)
+               ("S-<tab>" . hideshow-extra-toggle-all))))
+#+end_src
+
+** Usage
+
+=M-x hideshow-extra-mode RET=
+
+| Key     | Command                         | 
+|---------+---------------------------------|
+| TAB     | hideshow-extra-toggle-or-indent |
+| S-<tab> | hideshow-extra-toggle-all       |
+
+** Commands
+
+*** ~hideshow-extra-toggle-or-indent~
+Toggle hiding/showing a of block or invoke =indent-for-tab-command=. Inside string or comments call =indent-for-tab-command=. otherwise activate =hs-minor-mode= and toggle hiding.
+*** ~hideshow-extra-toggle-all~
+Activate =hs-minor-mode= and toggle folding for all nodes.
+** Customization
+
+*** ~hideshow-extra-hide-initial-comment-block-condition~
+Function to enable or disable =hs-hide-initial-comment-block=. It is called without arguments. If returned value is non-nil, hide initial block silencly, otherwise - do nothing.
