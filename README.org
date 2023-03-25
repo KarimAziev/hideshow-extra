@@ -1,7 +1,9 @@
 
 * hideshow-extra
 
-Additional =hideshow= commands and minor mode.
+Additional =hideshow= commands.
+
+[[./hideshow-extra.gif][./hideshow-extra.gif]]
 
 ** Installation
 
@@ -30,25 +32,45 @@ git clone https://github.com/KarimAziev/hideshow-extra.git ~/.emacs.d/hideshow-e
              :host github)
   :bind ((:map hideshow-extra-mode-map
                ("TAB" . hideshow-extra-toggle-or-indent)
-               ("S-<tab>" . hideshow-extra-toggle-all))))
+               ("S-<tab>" . hideshow-extra-cycle)))
+  :hook ((emacs-lisp-mode . hideshow-extra-mode)
+         (hideshow-extra-mode . hideshow-extra-hide-initial-comment-block)))
 #+end_src
 
-** Usage
+** Commands and modes
+*** ~hideshow-extra-mode~
 
-=M-x hideshow-extra-mode RET=
+Minor mode that will activate keymap =hideshow-extra-mode-map= with such commands:
 
-| Key     | Command                         | 
-|---------+---------------------------------|
-| TAB     | hideshow-extra-toggle-or-indent |
-| S-<tab> | hideshow-extra-toggle-all       |
+| Key       | Command                           |
+|-----------+-----------------------------------|
+| =TAB=     | =hideshow-extra-toggle-or-indent= |
+| =S-<tab>= | =hideshow-extra-cycle=            |
 
-** Commands
+*** ~hideshow-extra-cycle~
+
+Cycle commands defined in the custom variable =hideshow-extra-toggle-all-modes=.
 
 *** ~hideshow-extra-toggle-or-indent~
 Toggle hiding/showing a of block or invoke =indent-for-tab-command=. Inside string or comments call =indent-for-tab-command=. otherwise activate =hs-minor-mode= and toggle hiding.
+
+*** ~hideshow-extra-narrow-to-docs~
+Hide all blocks except documentation strings.
+
+*** ~hideshow-extra-toggle-all-down~
+Toggle folding for nodes after point.
+*** ~hideshow-extra-toggle-all-up~
+Toggle folding for nodes before point.
+*** ~hideshow-extra-toggle-all-keep-current~
+Toggle folding for all nodes except current.
 *** ~hideshow-extra-toggle-all~
-Activate =hs-minor-mode= and toggle folding for all nodes.
+Toggle folding for all nodes.
+
 ** Customization
 
+*** ~hideshow-extra-recenter-after-toggle~
+Whether to recenter window after toggling.
+*** ~hideshow-extra-cycle-commands~
+List of functions to cycle with command =hideshow-extra-cycle=.
 *** ~hideshow-extra-hide-initial-comment-block-condition~
-Function to enable or disable =hs-hide-initial-comment-block=. It is called without arguments. If returned value is non-nil, hide initial block silencly, otherwise - do nothing.
+Function to enable or disable =hs-hide-initial-comment-block=. It is called without arguments. If returned value is non-nil, hide initial block silently, otherwise - do nothing.
