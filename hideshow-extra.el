@@ -282,7 +282,7 @@ activate `hs-minor-mode' and toggle hiding."
   (let ((stx (syntax-ppss (point))))
     (cond ((or (nth 3 stx)
                (nth 4 stx)
-               (looking-at "[\s\t]")
+               (looking-at "[\s\t\n]")
                (and (looking-at (regexp-quote comment-start))
                     (looking-back "\n" 0)))
            (indent-for-tab-command))
