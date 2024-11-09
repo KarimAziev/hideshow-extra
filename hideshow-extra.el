@@ -330,7 +330,7 @@ activate `hs-minor-mode' and toggle hiding."
                                        ('define-derived-mode  4)
                                        ('define-generic-mode  8)
                                        ('define-compilation-mode  3))))
-                  (when-let ((list-start (nth 1 (syntax-ppss (point)))))
+                  (when-let* ((list-start (nth 1 (syntax-ppss (point)))))
                     (goto-char list-start)
                     t)))
       (when-let* ((beg (and doc-pos (point)))
